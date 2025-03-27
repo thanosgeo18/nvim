@@ -1,0 +1,104 @@
+# [[ Snippets for writing sniipets ]]
+
+# Make it easier to create new snippets
+snippet snip "A snippet for writing Ultisnips snippets" bA
+`!p snip.rv = "snippet"` ${1:trigger} "${2:Description}" ${3:options}
+$4
+`!p snip.rv = "endsnippet"`
+
+$0
+endsnippet
+
+# [[ Common math snippets ]]
+snippet msnip "Math Mode Snippet" bA
+context "math()"
+`!p snip.rv = "snippet"` ${1:trigger} "${2:Description}" ${3:options}
+$4
+`!p snip.rv = "endsnippet"`
+
+$0
+endsnippet
+
+snippet let "letter snip" bA
+context "math()"
+`!p snip.rv = "snippet"` ;${1:trigger} ";$1 -> \\$2 in math" iA
+\\\\${2:latex}`!p snip.rv = "$0"`
+`!p snip.rv = "endsnippet"`
+
+context "not_math()"
+`!p snip.rv = "snippet"` ;$1 ";$1 -> \$\\$2\$ in text" wA
+\\\$\\\\$2\\\$\`!p
+if t[1] and t[1][0] not in [',', '.', '?', '-', ' ']:
+    snip.rv = ' '
+else:
+    snip.rv = ''
+\`\$1
+`!p snip.rv = "endsnippet"`
+
+$0
+endsnippet
+
+snippet clet "letter + capital snip" bA
+context "math()"
+`!p snip.rv = "snippet"` ;${1:trigger} ";$1 -> \\$2 in math" iA
+\\\\${2:latex}`!p snip.rv = "$0"`
+`!p snip.rv = "endsnippet"`
+
+context "not_math()"
+`!p snip.rv = "snippet"` ;$1 ";$1 -> \$\\$2\$ in text" wA
+\\\$\\\\$2\\\$\`!p
+if t[1] and t[1][0] not in [',', '.', '?', '-', ' ']:
+    snip.rv = ' '
+else:
+    snip.rv = ''
+\`\$1
+`!p snip.rv = "endsnippet"`
+
+context "math()"
+`!p snip.rv = "snippet"` ;${1/\w+\s*/\u$0/} ";${1/\w+\s*/\u$0/} -> ${2/\w+\s*/\u$0/}" iA
+\\\\${2/\w+\s*/\u$0/}`!p snip.rv = "$0"`
+`!p snip.rv = "endsnippet"`
+
+context "not_math()"
+`!p snip.rv = "snippet"` ;${1/\w+\s*/\u$0/} ";${1/\w+\s*/\u$0/} -> \$\\${2/\w+\s*/\u$0/}\$ in text" wA
+\\\$\\\\${2/\w+\s*/\u$0/}\\\$\`!p
+if t[1] and t[1][0] not in [',', '.', '?', '-', ' ']:
+    snip.rv = ' '
+else:
+    snip.rv = ''
+\`\$1
+`!p snip.rv = "endsnippet"`
+
+$0
+endsnippet
+
+snippet env "snvironment snip" bA
+`!p snip.rv = "snippet"` ${1:trigger} "$2"
+\\\\begin\\\{$2\\\}
+	`!p snip.rv = "$1"`
+\\\\end\\\{$2\\\}
+`!p snip.rv = "endsnippet"`
+
+$0
+endsnippet
+
+snippet post "postscript snip" bA
+context "math()"
+`!p snip.rv = "snippet"` '$1' "$2" iA
+\\\\$2\\\{\$1\\\}
+`!p snip.rv = "endsnippet"`
+
+context "math()"
+`!p snip.rv = "snippet"` '([A-Za-z])$1' "$2" riA
+\\\\$2\\\{\`!p snip.rv = match.group(1) \`\\\}
+`!p snip.rv = "endsnippet"`
+
+$0
+endsnippet
+
+snippet o "obsidian -> snippet" 
+${VISUAL/\s*(\{trigger: ")(.*?)(", replacement: ")(.*?)(", options: ")([A-Za-z]+)("\},)/context "math()"\nsnippet $2 "Description" $6 \n$4\nendsnippet/}
+$0
+endsnippet
+
+
