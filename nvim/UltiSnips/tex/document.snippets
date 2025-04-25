@@ -1,0 +1,50 @@
+# Global python scripts
+global !p
+
+def not_math():
+	return vim.eval('vimtex#syntax#in_mathzone()') == '0'
+
+endglobal
+
+# [[ Document & Preamble ]]
+
+snippet template "Basic template" b
+\\documentclass[a4paper]\{${1:article}}
+\\input\{../preamble.tex\}
+
+\\begin\{document\}
+
+\\title\{${2:Title}\}
+\maketitle
+\tableofcontents
+
+$0
+
+\\end\{document\}
+endsnippet
+
+snippet pac "Package" b
+\\usepackage[${1:options}]{${2:package}}$0
+endsnippet
+
+context "not_math()"
+snippet "sec(\*?)" "section" rb
+\\section`!p snip.rv = match.group(1)`\{$1\}
+
+$0
+endsnippet
+
+context "not_math()"
+snippet "ssec(\*?)" "subsection" rb
+\\subsection`!p snip.rv = match.group(1)`\{$1\}
+
+$0
+endsnippet
+
+context "not_math()"
+snippet "sssec(\*?)" "subsubsection" rb
+\\subsubsection`!p snip.rv = match.group(1)`\{$1\}
+
+$0
+endsnippet
+
