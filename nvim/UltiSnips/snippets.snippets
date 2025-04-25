@@ -1,0 +1,132 @@
+# [[ Snippets for writing sniipets ]]
+
+# Make it easier to create new snippets
+snippet snip "A snippet for writing snippets" bA
+`!p snip.rv = "snippet"` ${1:trigger} "${2:Description}" ${3:options}
+$4
+`!p snip.rv = "endsnippet"`
+
+$0
+endsnippet
+
+snippet tsnip "Template for a snippet that writes snippets" bA
+\`!p snip.rv = "snippet"\` ${1:\$\{1:trigger\}} "${2:\$\{2:Description\}}" ${3:\$\{3:options\}}
+$4
+\`!p snip.rv = "endsnippet"\`
+endsnippet
+
+snippet csnip "snippet with context" bA
+context "$1"
+`!p snip.rv = "snippet"` ${2:trigger} "${3:Description}" ${4:options}
+$5
+`!p snip.rv = "endsnippet"`
+
+$0
+endsnippet
+
+# Snippets for LaTeX letters
+snippet let "letter snip" bA
+context "math()"
+`!p snip.rv = "snippet"` ;${1:trigger} ";$1 -> \\$2 in math" iA
+\\\\${2:latex}\`!p snip.rv = trailing_space_letter(t,0)\`\$0
+`!p snip.rv = "endsnippet"`
+
+context "not_math()"
+`!p snip.rv = "snippet"` ;$1 ";$1 -> \$\\$2\$ in text" wA
+\\\$\\\\$2\\\$\`!p snip.rv = trailing_space_inline(t,0)\`\$0
+`!p snip.rv = "endsnippet"`
+
+$0
+endsnippet
+
+snippet clet "letter + capital snip" bA
+context "math()"
+`!p snip.rv = "snippet"` ;${1:trigger} ";$1 -> \\$2 in math" iA
+\\\\${2:latex}\`!p snip.rv = trailing_space_letter(t,0)\`\$0
+`!p snip.rv = "endsnippet"`
+
+context "not_math()"
+`!p snip.rv = "snippet"` ;$1 ";$1 -> \$\\$2\$ in text" wA
+\\\$\\\\$2\\\$\`!p snip.rv = trailing_space_inline(t,0)\`\$0
+`!p snip.rv = "endsnippet"`
+
+context "math()"
+`!p snip.rv = "snippet"` ;${1/\w+\s*/\u$0/} ";${1/\w+\s*/\u$0/} -> ${2/\w+\s*/\u$0/}" iA
+\\\\${2/\w+\s*/\u$0/}\`!p snip.rv = trailing_space_letter(t,0)\`\$0
+`!p snip.rv = "endsnippet"`
+
+context "not_math()"
+`!p snip.rv = "snippet"` ;${1/\w+\s*/\u$0/} ";${1/\w+\s*/\u$0/} -> \$\\${2/\w+\s*/\u$0/}\$ in text" wA
+\\\$\\\\${2/\w+\s*/\u$0/}\\\$\`!p snip.rv = trailing_space_inline(t,0)\`\$0
+`!p snip.rv = "endsnippet"`
+
+$0
+endsnippet
+
+# Reccomended uses:
+## stress + letter -> $1 (consonants also), english letter -> $2
+## dialytika + letter -> $1 (consonants also), LaTeX greek -> $2
+# Vowels will be stressed, consonants will be preceded by a stress,
+# can't do that automatically
+# Same result as typing greek letter symnols in english in math mode
+snippet glet "greek -> english letters" bA
+context "math()"
+`!p snip.rv = "snippet"` $1 "$1 -> $2 in math" iA
+$2${3:\`!p snip.rv = trailing_space_letter(t,0)\`}\$0
+`!p snip.rv = "endsnippet"`
+
+context "not_math()"
+`!p snip.rv = "snippet"` '$1 ' "$1 -> \$$2\$ in text" wA
+\\\$$2\\\$\`!p snip.rv = trailing_space_inline(t,0)\`\$0
+`!p snip.rv = "endsnippet"`
+
+context "math()"
+`!p snip.rv = "snippet"` ${1/\w+\s*/\u$0/} "${1/\w+\s*/\u$0/} -> ${2/\w+\s*/\u$0/} in math" iA
+${2/\w+\s*/\u$0/}$3\$0
+`!p snip.rv = "endsnippet"`
+
+context "not_math()"
+`!p snip.rv = "snippet"` '${1/\w+\s*/\u$0/} ' "${1/\w+\s*/\u$0/} -> \$${2/\w+\s*/\u$0/}\$ in text" wA
+\\\$${2/\w+\s*/\u$0/}\\\$\`!p snip.rv = trailing_space_inline(t,0)\`\$0
+`!p snip.rv = "endsnippet"`
+
+$0
+endsnippet
+
+# Environment snippets
+snippet env "environment snip" bA
+`!p snip.rv = "snippet"` ${1:trigger} "$2"
+\\\\begin\\\{$2\\\}
+	`!p snip.rv = "$1"`
+\\\\end\\\{$2\\\}
+`!p snip.rv = "endsnippet"`
+
+$0
+endsnippet
+
+# Postscript snippets
+snippet post "postscript snip" bA
+context "math()"
+`!p snip.rv = "snippet"` '$1' "$2" iA
+\\\\$2\\\{\$1\\\}
+`!p snip.rv = "endsnippet"`
+
+context "math()"
+`!p snip.rv = "snippet"` '([A-Za-z])$1' "$2" riA
+\\\\$2\\\{\`!p snip.rv = match.group(1) \`\\\}
+`!p snip.rv = "endsnippet"`
+
+$0
+endsnippet
+
+# TODO: Turn this into 'regex -> Tab' and make it more readable
+snippet o "obsidian -> snippet" 
+${VISUAL/\s*(\{trigger: ")(.*?)(", replacement: ")(.*?)(", options: ")([A-Za-z]+)("\},)/context "math()"\nsnippet $2 "Description" $6 \n$4\nendsnippet/}
+$0
+endsnippet
+
+snippet '(kj|jk|ξκ|κξ)' "( | )" rwA
+'(${VISUAL}|$1)'
+endsnippet
+
+
