@@ -84,12 +84,17 @@ vim.opt.confirm = true
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
 
+-- Quick one-letter commands with <leader><letter>
+vim.keymap.set('n', '<leader>q', '<Cmd>:q<CR>', { desc = '[Q]uit Neovim' })
+vim.keymap.set('n', '<leader>w', '<Cmd>:w<CR>', { desc = '[W]rite file' })
+
+
 -- Clear highlights on search when pressing <Esc> in normal mode
 --  See `:help hlsearch`
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
 -- Diagnostic keymaps
-vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
+vim.keymap.set('n', '<leader>e', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
@@ -113,6 +118,104 @@ vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left wind
 vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
+
+-- [[ Support for greek keys ]]
+-- Remap greek layout to english layout (QWERTY)
+
+-- Lowercase Greek to English
+local greek_to_english = {
+--[';'] = 'q',   -- ; -> q
+  ['ς'] = 'w',   -- ς -> w
+  ['ε'] = 'e',   -- ε -> e
+  ['ρ'] = 'r',   -- ρ -> r
+  ['τ'] = 't',   -- τ -> t
+  ['υ'] = 'y',   -- υ -> y
+  ['θ'] = 'u',   -- θ -> u
+  ['ι'] = 'i',   -- ι -> i
+  ['ο'] = 'o',   -- ο -> o
+  ['π'] = 'p',   -- π -> p
+  ['α'] = 'a',   -- α -> a
+  ['σ'] = 's',   -- σ -> s
+  ['δ'] = 'd',   -- δ -> d
+  ['φ'] = 'f',   -- φ -> f
+  ['γ'] = 'g',   -- γ -> g
+  ['η'] = 'h',   -- η -> h
+  ['ξ'] = 'j',   -- ξ -> j
+  ['κ'] = 'k',   -- κ -> k
+  ['λ'] = 'l',   -- λ -> l
+  ['ζ'] = 'z',   -- ζ -> z
+  ['χ'] = 'x',   -- χ -> x
+  ['ψ'] = 'c',   -- ψ -> c
+  ['ω'] = 'v',   -- ω -> v
+  ['β'] = 'b',   -- β -> b
+  ['ν'] = 'n',   -- ν -> n
+  ['μ'] = 'm',   -- μ -> m
+}
+
+-- Uppercase Greek to English (with : mapped to Q at the top)
+local greek_to_english_upper = {
+--[':'] = 'Q',   -- : -> Q
+  ['Σ'] = 'S',   -- Σ -> S
+  ['Ε'] = 'E',   -- Ε -> E
+  ['Ρ'] = 'R',   -- Ρ -> R
+  ['Τ'] = 'T',   -- Τ -> T
+  ['Υ'] = 'Y',   -- Υ -> Y
+  ['Θ'] = 'U',   -- Θ -> U
+  ['Ι'] = 'I',   -- Ι -> I
+  ['Ο'] = 'O',   -- Ο -> O
+  ['Π'] = 'P',   -- Π -> P
+  ['Α'] = 'A',   -- Α -> A
+  ['Σ'] = 'S',   -- Σ -> S
+  ['Δ'] = 'D',   -- Δ -> D
+  ['Φ'] = 'F',   -- Φ -> F
+  ['Γ'] = 'G',   -- Γ -> G
+  ['Η'] = 'H',   -- Η -> H
+  ['Ξ'] = 'J',   -- Ξ -> J
+  ['Κ'] = 'K',   -- Κ -> K
+  ['Λ'] = 'L',   -- Λ -> L
+  ['Ζ'] = 'Z',   -- Ζ -> Z
+  ['Χ'] = 'X',   -- Χ -> X
+  ['Ψ'] = 'C',   -- Ψ -> C
+  ['Ω'] = 'V',   -- Ω -> V
+  ['Β'] = 'B',   -- Β -> B
+  ['Ν'] = 'N',   -- Ν -> N
+  ['Μ'] = 'M',   -- Μ -> M
+}
+
+-- Mappings for tonos (΄) and dialytika (¨), including double key press for tonos
+local greek_special_mappings = {
+  ['΄΄'] = ';',  -- Press tonοs (΄) twice to get ; (semicolon)
+  ['¨¨'] = ':',   -- Press dialytika (¨) once to get : (colon)
+  ['΅΅'] = 'W',   -- ΅ -> W (stress key)
+}
+
+-- Combine all mappings into one table
+local greek_to_english_keys = vim.tbl_extend("force", greek_to_english, greek_to_english_upper, greek_special_mappings)
+
+-- Apply to normal, visual, and operator-pending modes
+local modes = { 'n', 'v', 'o' }
+
+for _, mode in ipairs(modes) do
+  for greek_key, english_key in pairs(greek_to_english_keys) do
+    -- Regular key mapping
+    vim.keymap.set(mode, greek_key, english_key, {
+      noremap = false,  -- Allow existing mappings on the English key to work
+      silent = true,    -- Prevent echoing the key in the command line
+    })
+
+    -- Ctrl key mapping (for Greek keys, add prefix '<C-...>')
+    vim.keymap.set(mode, '<C-'..greek_key..'>', '<C-'..english_key..'>', {
+      noremap = false,  -- Allow existing mappings on the English key to work
+      silent = true,    -- Prevent echoing the key in the command line
+    })
+
+    -- Alt key mapping (for Greek keys, add prefix '<A-...>')
+    vim.keymap.set(mode, '<A-'..greek_key..'>', '<A-'..english_key..'>', {
+      noremap = false,  -- Allow existing mappings on the English key to work
+      silent = true,    -- Prevent echoing the key in the command line
+    })
+  end
+end
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
@@ -186,8 +289,7 @@ require('lazy').setup({
   -- UltiSnips for snippets
   { 'SirVer/ultisnips',
     config = function()
-      vim.g.UltiSnipsExpandTrigger = "<Tab>" -- Use Tab to expand snippets
-      vim.g.UltiSnipsJumpForwardTrigger = "<Tab>" -- Use Tab to move forward
+      vim.g.UltiSnipsJumpOrExpandTrigger = "<Tab>" -- Use Tab to move forward (or expand)
       vim.g.UltiSnipsJumpBackwardTrigger = "<S-Tab>" -- Use Shift-Tab to move back
       -- Keybind for refreshing snippets: useful when updating snippets while
       -- working on multiplea neovim instances, without having to restart
@@ -255,15 +357,15 @@ require('lazy').setup({
       },
 
       -- Document existing key chains
-      spec = {
-        { '<leader>c', group = '[C]ode', mode = { 'n', 'x' } },
-        { '<leader>d', group = '[D]ocument' },
-        { '<leader>r', group = '[R]ename' },
-        { '<leader>s', group = '[S]earch' },
-        { '<leader>w', group = '[W]orkspace' },
-        { '<leader>t', group = '[T]oggle' },
-        { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
-      },
+--      spec = {
+--        { '<leader>c', group = '[C]ode', mode = { 'n', 'x' } },
+--        { '<leader>d', group = '[D]ocument' },
+--        { '<leader>r', group = '[R]ename' },
+--        { '<leader>s', group = '[S]earch' },
+--        { '<leader>w', group = '[W]orkspace' },
+--        { '<leader>t', group = '[T]oggle' },
+--        { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
+--      },
     },
   },
 
@@ -274,7 +376,9 @@ require('lazy').setup({
       config = function()
         -- Optionally configure and load the colorscheme
         -- directly inside the plugin declaration.
-        vim.g.gruvbox_naterial_background = 'hard'
+        vim.g.gruvbox_material_foreground = 'material'
+        vim.g.gruvbox_material_background = 'hard'
+        vim.g.gruvbox_material_ui_contrast = 'high'
         vim.g.gruvbox_material_enable_italic = false
         vim.cmd.colorscheme('gruvbox-material')
       end
@@ -336,12 +440,9 @@ vim.api.nvim_create_autocmd("FileType", {
     -- Make concealment color readable.
     vim.cmd [[ hi Conceal guifg=#fb4934 ctermfg=167 ]]
 
-    -- Optional: Set conceal cursor to 'n' (concealed text only hidden in normal mode)
-    vim.opt_local.concealcursor = "nc"
-
     -- Enable spell checking
     vim.opt_local.spell = true
-    vim.opt_local.spelllang = { "en" }
+    vim.opt_local.spelllang = { "en", "el" }
 
     -- Map Ctrl-l to correct last spelling mistake in insert mode
     vim.api.nvim_set_keymap('i', '<C-l>', '<C-g>u<Esc>[s1z=gi<C-g>u', { noremap = true, silent = true })

@@ -1,0 +1,818 @@
+# Global python scripts
+global !p
+
+def math():
+  return vim.eval('vimtex#syntax#in_mathzone()') == '1'
+
+def not_math():
+	return vim.eval('vimtex#syntax#in_mathzone()') == '0'
+
+def trailing_space_inline(t,n):
+	if t[n] and t[n][0] not in [',', '.', '?', '-', ' ']:
+		return ' '
+	else:
+		return ''
+
+import re
+def trailing_space_letter(t,n):
+	if t[n] and re.match(r'[a-zA-Zα-ωΑ-Ω]', t[n][0]):
+		return ' '
+	else:
+		return ''
+
+endglobal
+
+# [[ Greek Layout -> English & LaTeX ]]
+
+# These snippets are deisgned to work just like the regular [;a -> \alpha] snippets
+# In text mode, stressed vowels expand after <space> is pressed to avoid conflicts
+# In math mode no space is required
+# Exception: capital W requires <space> in both modes, because it uses the [΅] character
+
+priority 10
+
+# ά -> a
+
+context "math()"
+snippet ά "ά -> a in math" iA
+a$0
+endsnippet
+
+context "not_math()"
+snippet 'ά ' "ά -> $a$ in text" wA
+\$a\$`!p snip.rv = trailing_space_inline(t,0)`$0
+endsnippet
+
+context "math()"
+snippet Α "Α -> A in math" iA
+A$0
+endsnippet
+
+context "not_math()"
+snippet 'Ά ' "Ά -> $A$ in text" wA
+\$A\$`!p snip.rv = trailing_space_inline(t,0)`$0
+endsnippet
+
+# ΄β -> b
+
+context "math()"
+snippet ΄β "΄β -> b in math" iA
+b$0
+endsnippet
+
+context "not_math()"
+snippet ΄β "΄β -> $b$ in text" wA
+\$b\$`!p snip.rv = trailing_space_inline(t,0)`$0
+endsnippet
+
+context "math()"
+snippet Β "Β -> B in math" iA
+B$0
+endsnippet
+
+context "not_math()"
+snippet ΄Β "΄Β -> $B$ in text" wA
+\$B\$`!p snip.rv = trailing_space_inline(t,0)`$0
+endsnippet
+
+# ΄γ -> g
+
+context "math()"
+snippet ΄γ "΄γ -> g in math" iA
+g$0
+endsnippet
+
+context "not_math()"
+snippet ΄γ "΄γ -> $g$ in text" wA
+\$g\$`!p snip.rv = trailing_space_inline(t,0)`$0
+endsnippet
+
+context "math()"
+snippet ΄Γ "΄Γ -> G in math" iA
+G$0
+endsnippet
+
+context "not_math()"
+snippet ΄Γ "΄Γ -> $G$ in text" wA
+\$G\$`!p snip.rv = trailing_space_inline(t,0)`$0
+endsnippet
+
+# ΄δ -> d
+
+context "math()"
+snippet ΄δ "΄δ -> d in math" iA
+d$0
+endsnippet
+
+context "not_math()"
+snippet ΄δ "΄δ -> $d$ in text" wA
+\$d\$`!p snip.rv = trailing_space_inline(t,0)`$0
+endsnippet
+
+context "math()"
+snippet ΄Δ "΄Δ -> D in math" iA
+D$0
+endsnippet
+
+context "not_math()"
+snippet ΄Δ "΄Δ -> $D$ in text" wA
+\$D\$`!p snip.rv = trailing_space_inline(t,0)`$0
+endsnippet
+
+# έ -> e
+
+context "math()"
+snippet έ "έ -> e in math" iA
+e$0
+endsnippet
+
+context "not_math()"
+snippet 'έ ' "έ -> $e$ in text" wA
+\$e\$`!p snip.rv = trailing_space_inline(t,0)`$0
+endsnippet
+
+context "math()"
+snippet Ε "Ε -> E in math" iA
+E$0
+endsnippet
+
+context "not_math()"
+snippet 'Έ ' "Έ -> $E$ in text" wA
+\$E\$`!p snip.rv = trailing_space_inline(t,0)`$0
+endsnippet
+
+# ζ -> z
+
+context "math()"
+snippet ΄ζ "΄ζ -> z in math" iA
+z$0
+endsnippet
+
+context "not_math()"
+snippet ΄ζ "΄ζ -> $z$ in text" wA
+\$z\$`!p snip.rv = trailing_space_inline(t,0)`$0
+endsnippet
+
+context "math()"
+snippet Ζ "Ζ -> Z in math" iA
+Z$0
+endsnippet
+
+context "not_math()"
+snippet ΄Ζ "΄Ζ -> $Z$ in text" wA
+\$Z\$`!p snip.rv = trailing_space_inline(t,0)`$0
+endsnippet
+
+# ή -> h
+
+context "math()"
+snippet ή "ή -> h in math" iA
+h$0
+endsnippet
+
+context "math()"
+snippet Η "Η -> H in math" iA
+H$0
+endsnippet
+
+# ΄θ -> u
+
+context "math()"
+snippet ΄θ "΄θ -> u in math" iA
+u$0
+endsnippet
+
+context "not_math()"
+snippet ΄θ "΄θ -> $u$ in text" wA
+\$u\$`!p snip.rv = trailing_space_inline(t,0)`$0
+endsnippet
+
+context "math()"
+snippet ΄Θ "΄Θ -> U in math" iA
+U$0
+endsnippet
+
+context "not_math()"
+snippet ΄Θ "΄Θ -> $U$ in text" wA
+\$U\$`!p snip.rv = trailing_space_inline(t,0)`$0
+endsnippet
+
+# ί -> i
+
+context "math()"
+snippet ί "ί -> i in math" iA
+i$0
+endsnippet
+
+context "not_math()"
+snippet 'ί ' "ί -> $i$ in text" wA
+\$i\$`!p snip.rv = trailing_space_inline(t,0)`$0
+endsnippet
+
+context "math()"
+snippet Ι "Ι -> I in math" iA
+I$0
+endsnippet
+
+context "not_math()"
+snippet 'Ί ' "Ί -> $I$ in text" wA
+\$I\$`!p snip.rv = trailing_space_inline(t,0)`$0
+endsnippet
+
+# ΄κ -> k
+
+context "math()"
+snippet ΄κ "΄κ -> k in math" iA
+k$0
+endsnippet
+
+context "not_math()"
+snippet ΄κ "΄κ -> $k$ in text" wA
+\$k\$`!p snip.rv = trailing_space_inline(t,0)`$0
+endsnippet
+
+context "math()"
+snippet Κ "Κ -> K in math" iA
+K$0
+endsnippet
+
+context "not_math()"
+snippet ΄Κ "΄Κ -> $K$ in text" wA
+\$K\$`!p snip.rv = trailing_space_inline(t,0)`$0
+endsnippet
+
+# ΄λ -> l
+
+context "math()"
+snippet ΄λ "΄λ -> l in math" iA
+l$0
+endsnippet
+
+context "not_math()"
+snippet ΄λ "΄λ -> $l$ in text" wA
+\$l\$`!p snip.rv = trailing_space_inline(t,0)`$0
+endsnippet
+
+context "math()"
+snippet ΄Λ "΄Λ -> L in math" iA
+L$0
+endsnippet
+
+context "not_math()"
+snippet ΄Λ "΄Λ -> $L$ in text" wA
+\$L\$`!p snip.rv = trailing_space_inline(t,0)`$0
+endsnippet
+
+# ΄μ -> m
+
+context "math()"
+snippet ΄μ "΄μ -> m in math" iA
+m$0
+endsnippet
+
+context "not_math()"
+snippet ΄μ "΄μ -> $m$ in text" wA
+\$m\$`!p snip.rv = trailing_space_inline(t,0)`$0
+endsnippet
+
+context "math()"
+snippet Μ "Μ -> M in math" iA
+M$0
+endsnippet
+
+context "not_math()"
+snippet ΄Μ "΄Μ -> $M$ in text" wA
+\$M\$`!p snip.rv = trailing_space_inline(t,0)`$0
+endsnippet
+
+# ΄ν -> n
+
+context "math()"
+snippet ΄ν "΄ν -> n in math" iA
+n$0
+endsnippet
+
+context "not_math()"
+snippet ΄ν "΄ν -> $n$ in text" wA
+\$n\$`!p snip.rv = trailing_space_inline(t,0)`$0
+endsnippet
+
+context "math()"
+snippet Ν "Ν -> N in math" iA
+N$0
+endsnippet
+
+context "not_math()"
+snippet ΄Ν "΄Ν -> $N$ in text" wA
+\$N\$`!p snip.rv = trailing_space_inline(t,0)`$0
+endsnippet
+
+# ΄ξ -> j
+
+context "math()"
+snippet ΄ξ "΄ξ -> j in math" iA
+j$0
+endsnippet
+
+context "not_math()"
+snippet ΄ξ "΄ξ -> $j$ in text" wA
+\$j\$`!p snip.rv = trailing_space_inline(t,0)`$0
+endsnippet
+
+context "math()"
+snippet ΄Ξ "΄Ξ -> J in math" iA
+J$0
+endsnippet
+
+context "not_math()"
+snippet ΄Ξ "΄Ξ -> $J$ in text" wA
+\$J\$`!p snip.rv = trailing_space_inline(t,0)`$0
+endsnippet
+
+# ό -> o
+
+context "math()"
+snippet ο "ο -> o in math" iA
+o$0
+endsnippet
+
+context "not_math()"
+snippet 'ό ' "ό -> $o$ in text" wA
+\$o\$`!p snip.rv = trailing_space_inline(t,0)`$0
+endsnippet
+
+context "math()"
+snippet Ο "Ο -> O in math" iA
+O$0
+endsnippet
+
+context "not_math()"
+snippet 'Ό ' "Ό -> $O$ in text" wA
+\$O\$`!p snip.rv = trailing_space_inline(t,0)`$0
+endsnippet
+
+# ΄π -> p
+
+context "math()"
+snippet ΄π "΄π -> p in math" iA
+p$0
+endsnippet
+
+context "not_math()"
+snippet ΄π "΄π -> $p$ in text" wA
+\$p\$`!p snip.rv = trailing_space_inline(t,0)`$0
+endsnippet
+
+context "math()"
+snippet ΄Π "΄Π -> P in math" iA
+P$0
+endsnippet
+
+context "not_math()"
+snippet ΄Π "΄Π -> $P$ in text" wA
+\$P\$`!p snip.rv = trailing_space_inline(t,0)`$0
+endsnippet
+
+# ΄ρ -> r
+
+context "math()"
+snippet ΄ρ "΄ρ -> r in math" iA
+r$0
+endsnippet
+
+context "not_math()"
+snippet ΄ρ "΄ρ -> $r$ in text" wA
+\$r\$`!p snip.rv = trailing_space_inline(t,0)`$0
+endsnippet
+
+context "math()"
+snippet ΄Ρ "΄Ρ -> R in math" iA
+R$0
+endsnippet
+
+context "not_math()"
+snippet ΄Ρ "΄Ρ -> $R$ in text" wA
+\$R\$`!p snip.rv = trailing_space_inline(t,0)`$0
+endsnippet
+
+# ΄σ -> s
+
+context "math()"
+snippet ΄σ "΄σ -> s in math" iA
+s$0
+endsnippet
+
+context "not_math()"
+snippet ΄σ "΄σ -> $s$ in text" wA
+\$s\$`!p snip.rv = trailing_space_inline(t,0)`$0
+endsnippet
+
+context "math()"
+snippet ΄Σ "΄Σ -> S in math" iA
+S$0
+endsnippet
+
+context "not_math()"
+snippet ΄Σ "΄Σ -> $S$ in text" wA
+\$S\$`!p snip.rv = trailing_space_inline(t,0)`$0
+endsnippet
+
+# ΄τ -> t
+
+context "math()"
+snippet ΄τ "΄τ -> t in math" iA
+t$0
+endsnippet
+
+context "not_math()"
+snippet ΄τ "΄τ -> $t$ in text" wA
+\$t\$`!p snip.rv = trailing_space_inline(t,0)`$0
+endsnippet
+
+context "math()"
+snippet Τ "Τ -> T in math" iA
+T$0
+endsnippet
+
+context "not_math()"
+snippet ΄Τ "΄Τ -> $T$ in text" wA
+\$T\$`!p snip.rv = trailing_space_inline(t,0)`$0
+endsnippet
+
+# ύ -> y
+
+context "math()"
+snippet ύ "ύ -> y in math" iA
+y$0
+endsnippet
+
+context "not_math()"
+snippet 'ύ ' "ύ -> $y$ in text" wA
+\$y\$`!p snip.rv = trailing_space_inline(t,0)`$0
+endsnippet
+
+context "math()"
+snippet Υ "Υ -> Y in math" iA
+Y$0
+endsnippet
+
+context "not_math()"
+snippet 'Ύ ' "Ύ -> $Y$ in text" wA
+\$Y\$`!p snip.rv = trailing_space_inline(t,0)`$0
+endsnippet
+
+# ΄φ -> f
+
+context "math()"
+snippet ΄φ "΄φ -> f in math" iA
+f$0
+endsnippet
+
+context "not_math()"
+snippet ΄φ "΄φ -> $f$ in text" wA
+\$f\$`!p snip.rv = trailing_space_inline(t,0)`$0
+endsnippet
+
+context "math()"
+snippet ΄Φ "΄Φ -> F in math" iA
+F$0
+endsnippet
+
+context "not_math()"
+snippet ΄Φ "΄Φ -> $F$ in text" wA
+\$F\$`!p snip.rv = trailing_space_inline(t,0)`$0
+endsnippet
+
+# ΄χ -> x
+
+context "math()"
+snippet ΄χ "΄χ -> x in math" iA
+x$0
+endsnippet
+
+context "not_math()"
+snippet ΄χ "΄χ -> $x$ in text" wA
+\$x\$`!p snip.rv = trailing_space_inline(t,0)`$0
+endsnippet
+
+context "math()"
+snippet Χ "Χ -> X in math" iA
+X$0
+endsnippet
+
+context "not_math()"
+snippet ΄Χ "΄Χ -> $X$ in text" wA
+\$X\$`!p snip.rv = trailing_space_inline(t,0)`$0
+endsnippet
+
+# ΄ψ -> c
+
+context "math()"
+snippet ΄ψ "΄ψ -> c in math" iA
+c$0
+endsnippet
+
+context "not_math()"
+snippet ΄ψ "΄ψ -> $c$ in text" wA
+\$c\$`!p snip.rv = trailing_space_inline(t,0)`$0
+endsnippet
+
+context "math()"
+snippet ΄Ψ "΄Ψ -> C in math" iA
+C$0
+endsnippet
+
+context "not_math()"
+snippet ΄Ψ "΄Ψ -> $C$ in text" wA
+\$C\$`!p snip.rv = trailing_space_inline(t,0)`$0
+endsnippet
+
+# ώ -> v
+
+context "math()"
+snippet ώ "ώ -> v in math" iA
+v$0
+endsnippet
+
+context "not_math()"
+snippet 'ώ ' "ώ -> $v$ in text" wA
+\$v\$`!p snip.rv = trailing_space_inline(t,0)`$0
+endsnippet
+
+context "math()"
+snippet Ώ "Ώ -> V in math" iA
+V$0
+endsnippet
+
+context "not_math()"
+snippet 'Ώ ' "Ώ -> $V$ in text" wA
+\$V\$`!p snip.rv = trailing_space_inline(t,0)`$0
+endsnippet
+
+# ΄; -> q & ΄: -> Q
+
+context "math()"
+snippet ΄; "΄; -> q in math" iA
+q$0
+endsnippet
+
+context "not_math()"
+snippet '΄; ' "΄; -> $q$ in text" wA
+\$q\$`!p snip.rv = trailing_space_inline(t,0)`$0
+endsnippet
+
+context "math()"
+snippet ΄: "΄: -> Q in math" iA
+Q$0
+endsnippet
+
+context "not_math()"
+snippet '΄: ' "΄: -> $Q$ in text" wA
+\$Q\$`!p snip.rv = trailing_space_inline(t,0)`$0
+endsnippet
+
+# ΄ς -> w & ΄΅ -> w
+
+context "math()"
+snippet ΄ς "΄ς -> w in math" iA
+w$0
+endsnippet
+
+context "not_math()"
+snippet ΄ς "΄ς -> $w$ in text" wA
+\$w\$`!p snip.rv = trailing_space_inline(t,0)`$0
+endsnippet
+
+context "math()"
+snippet ΄΅ "΄΅ -> W in math" iA
+W$0
+endsnippet
+
+context "not_math()"
+snippet ΄΅ "΄΅ -> $W$ in text" wA
+\$W\$`!p snip.rv = trailing_space_inline(t,0)`$0
+endsnippet
+
+
+# [[ Greek -> LaTeX ]]
+
+# These snippets turn greek letters in math mode to their LaTeX equivalents.
+
+priority 0
+
+# α -> \alpha
+
+context "math()"
+snippet α "α -> \alpha in math" iA
+\\alpha`!p snip.rv = trailing_space_letter(t,0)`$0
+endsnippet
+
+# β -> \beta
+
+context "math()"
+snippet β "β -> \beta in math" iA
+\\beta`!p snip.rv = trailing_space_letter(t,0)`$0
+endsnippet
+
+# γ -> gamma
+
+context "math()"
+snippet γ "γ -> gamma in math" iA
+gamma`!p snip.rv = trailing_space_letter(t,0)`$0
+endsnippet
+
+context "math()"
+snippet Γ "Γ -> Gamma in math" iA
+Gamma`!p snip.rv = trailing_space_letter(t,0)`$0
+endsnippet
+
+# δ -> \delta
+
+context "math()"
+snippet δ "δ -> \delta in math" iA
+\\delta`!p snip.rv = trailing_space_letter(t,0)`$0
+endsnippet
+
+context "math()"
+snippet Δ "Δ -> \Delta in math" iA
+\\Delta`!p snip.rv = trailing_space_letter(t,0)`$0
+endsnippet
+
+# ε -> \epsilon
+
+context "math()"
+snippet ε "ε -> \epsilon in math" iA
+\\epsilon`!p snip.rv = trailing_space_letter(t,0)`$0
+endsnippet
+
+# ζ -> \zeta
+
+context "math()"
+snippet ζ "ζ -> \zeta in math" iA
+\\zeta`!p snip.rv = trailing_space_letter(t,0)`$0
+endsnippet
+
+# η -> \eta
+
+context "math()"
+snippet η "η -> \eta in math" iA
+\\eta`!p snip.rv = trailing_space_letter(t,0)`$0
+endsnippet
+
+# θ -> \theta
+
+context "math()"
+snippet θ "θ -> \theta in math" iA
+\\theta`!p snip.rv = trailing_space_letter(t,0)`$0
+endsnippet
+
+context "math()"
+snippet Θ "Θ -> \Theta in math" iA
+\\Theta`!p snip.rv = trailing_space_letter(t,0)`$0
+endsnippet
+
+# ϊ -> \iota
+
+context "math()"
+snippet ι "ι -> \iota in math" iA
+\\iota`!p snip.rv = trailing_space_letter(t,0)`$0
+endsnippet
+
+# κ -> \kappa
+
+context "math()"
+snippet κ "κ -> \kappa in math" iA
+\\kappa`!p snip.rv = trailing_space_letter(t,0)`$0
+endsnippet
+
+# λ -> \lambda
+
+context "math()"
+snippet λ "λ -> \lambda in math" iA
+\\lambda`!p snip.rv = trailing_space_letter(t,0)`$0
+endsnippet
+
+context "math()"
+snippet Λ "Λ -> \Lambda in math" iA
+\\Lambda`!p snip.rv = trailing_space_letter(t,0)`$0
+endsnippet
+
+# μ -> \mu
+
+context "math()"
+snippet μ "μ -> \mu in math" iA
+\\mu`!p snip.rv = trailing_space_letter(t,0)`$0
+endsnippet
+
+# ν -> \nu
+
+context "math()"
+snippet ν "ν -> \nu in math" iA
+\\nu`!p snip.rv = trailing_space_letter(t,0)`$0
+endsnippet
+
+# ξ -> \xi
+
+context "math()"
+snippet ξ "ξ -> \xi in math" iA
+\\xi`!p snip.rv = trailing_space_letter(t,0)`$0
+endsnippet
+
+context "math()"
+snippet Ξ "Ξ -> \Xi in math" iA
+\\Xi`!p snip.rv = trailing_space_letter(t,0)`$0
+endsnippet
+
+# π -> \pi
+
+context "math()"
+snippet π "π -> \pi in math" iA
+\\pi`!p snip.rv = trailing_space_letter(t,0)`$0
+endsnippet
+
+context "math()"
+snippet Π "Π -> \Pi in math" iA
+\\Pi`!p snip.rv = trailing_space_letter(t,0)`$0
+endsnippet
+
+# ρ -> \rho
+
+context "math()"
+snippet ρ "ρ -> \rho in math" iA
+\\rho`!p snip.rv = trailing_space_letter(t,0)`$0
+endsnippet
+
+# σ -> \sigm
+
+context "math()"
+snippet σ "σ -> \sigma in math" iA
+\\sigma`!p snip.rv = trailing_space_letter(t,0)`$0
+endsnippet
+
+context "math()"
+snippet Σ "Σ -> \Sigma in math" iA
+\\Sigma`!p snip.rv = trailing_space_letter(t,0)`$0
+endsnippet
+
+# τ -> \tau
+
+context "math()"
+snippet τ "τ -> \tau in math" iA
+\\tau`!p snip.rv = trailing_space_letter(t,0)`$0
+endsnippet
+
+# ϋ -> \upsilon
+
+context "math()"
+snippet υ "υ -> \upsilon in math" iA
+\\upsilon`!p snip.rv = trailing_space_letter(t,0)`$0
+endsnippet
+
+context "math()"
+snippet Υ "Υ -> \Upsilon in math" iA
+\\Upsilon`!p snip.rv = trailing_space_letter(t,0)`$0
+endsnippet
+
+# φ -> \phi
+
+context "math()"
+snippet φ "φ -> \phi in math" iA
+\\phi`!p snip.rv = trailing_space_letter(t,0)`$0
+endsnippet
+
+context "math()"
+snippet Φ "Φ -> \Phi in math" iA
+\\Phi`!p snip.rv = trailing_space_letter(t,0)`$0
+endsnippet
+
+# χ -> \chi
+
+context "math()"
+snippet χ "χ -> \chi in math" iA
+\\chi`!p snip.rv = trailing_space_letter(t,0)`$0
+endsnippet
+
+# ψ -> \psi
+
+context "math()"
+snippet ψ "ψ -> \psi in math" iA
+\\psi`!p snip.rv = trailing_space_letter(t,0)`$0
+endsnippet
+
+context "math()"
+snippet Ψ "Ψ -> \Psi in math" iA
+\\Psi`!p snip.rv = trailing_space_letter(t,0)`$0
+endsnippet
+
+# ω -> \omega
+
+context "math()"
+snippet ω "ω -> \omega in math" iA
+\\omega`!p snip.rv = trailing_space_letter(t,0)`$0
+endsnippet
+
+context "math()"
+snippet Ω "Ω -> \Omega in math" iA
+\\Omega`!p snip.rv = trailing_space_letter(t,0)`$0
+endsnippet
+
